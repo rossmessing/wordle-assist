@@ -87,11 +87,34 @@ def process_guess(word_list, guess, result):
     return new_word_list
 
 
+def generate_result(guess, solution):
+    """ returns result string for guess if solution is the word being guessed"""
+    solution_chars = frozenset(solution)
+    return_string = ""
+    for g, s in zip(guess, solution):
+        if g == s:
+            return_string += '2'
+        elif g in solution_chars:
+            return_string += '1'
+        else:
+            return_string += '0'
+    return return_string
+
 def suggest_guess(word_list):
     """
     Suggests a guess from the set of possible words
     """
-    return random.choice(word_list)
+    # return random.choice(word_list)
+    guess_sum = {}
+    for guess in word_list:
+        guess_sum[guess] = 0
+        for solution in word_list:
+            guess_sum[guess] += len(process_guess(word_list, guess, generate_result(guess, solution)))
+    ordered_guesses = [(k, guess_sum[k]) for k in sorted(guess_sum, key=guess_sum.get)]
+    print(ordered_guesses[:10])
+    return ordered_guesses[0]
+
+
 
 
 class WordleShell(cmd.Cmd):
