@@ -1,6 +1,8 @@
 # wordle-assist
 A simple tool to assist wordle players
 
+This tool processes [wordle](https://www.nytimes.com/games/wordle/index.html) guesses to remove candidates that are no longer viable.
+
 
 
 # Instructions
@@ -33,5 +35,6 @@ the word `unfit` and receiving as a result:
   * `f` in yellow (right letter, wrong place)
   * the letter `i` in grey
   * the letter `t` in green (right letter, right place)
+* `suggest`: This suggests a word to guess.  Presently, it suggests a *random* word that is still viable
 
 

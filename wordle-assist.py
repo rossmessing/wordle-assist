@@ -1,5 +1,7 @@
 import cmd
 import os
+import random
+
 
 import wget
 
@@ -7,6 +9,9 @@ import wget
 WORD_LIST_URL = "https://gist.githubusercontent.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b/raw/5d752e5f0702da315298a6bb5a771586d6ff445c/wordle-answers-alphabetical.txt"
 WORD_LIST_FILENAME="words.txt"
 WORD_LENGTH = 5
+RANDOM_SEED = 42
+
+random.seed(RANDOM_SEED)
 
 def load_dictionary(url=WORD_LIST_URL, filename=WORD_LIST_FILENAME, word_length=WORD_LENGTH):
     """
@@ -29,6 +34,10 @@ class WordleShell(cmd.Cmd):
     def do_show(self, arg):
         'Show all remaining possible words.'
         print(self.word_list)
+
+    def do_suggest(self, arg):
+        'Suggest a word to guess.'
+        print(random.choice(self.word_list))
 
     def do_guess(self, arg):
         '''
