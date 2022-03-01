@@ -100,9 +100,9 @@ def generate_result(guess, solution):
             return_string += '0'
     return return_string
 
-def suggest_guess(word_list):
+def suggest_guess(word_list, num_suggestions=1):
     """
-    Suggests a guess from the set of possible words
+    Suggests guesses from the set of possible words
     """
     # return random.choice(word_list)
     guess_sum = {}
@@ -111,8 +111,7 @@ def suggest_guess(word_list):
         for solution in word_list:
             guess_sum[guess] += len(process_guess(word_list, guess, generate_result(guess, solution)))
     ordered_guesses = [(k, guess_sum[k]) for k in sorted(guess_sum, key=guess_sum.get)]
-    print(ordered_guesses[:10])
-    return ordered_guesses[0]
+    return ordered_guesses[:num_suggestions]
 
 
 
@@ -130,8 +129,8 @@ class WordleShell(cmd.Cmd):
         print(self.word_list)
 
     def do_suggest(self, arg):
-        'Suggest a word to guess.'
-        print(suggest_guess(self.word_list))
+        'Suggest a number of words to guess. ex: SUGGEST 10'
+        print(suggest_guess(word_list=self.word_list, num_suggestions=int(arg)))
 
     def do_guess(self, arg):
         '''
