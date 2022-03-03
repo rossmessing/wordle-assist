@@ -1,5 +1,5 @@
-from wordle.load_data import load_word_lists
-from wordle.shell import WordleShell
+from wordle_assist.load_data import load_word_lists
+from wordle_assist.shell import WordleShell
 
 
 if __name__ == '__main__':

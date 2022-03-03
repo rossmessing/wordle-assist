@@ -1,6 +1,6 @@
 import cmd
 
-from wordle.wordle import process_guess, suggest_guess
+from wordle_assist.wordle import process_guess, suggest_guess
 
 class WordleShell(cmd.Cmd):
     intro = 'Welcome to a wordle assistant.   Type help or ? to list commands.\n'

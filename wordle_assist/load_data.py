@@ -2,7 +2,7 @@ from os.path import exists
 
 from wget import download
 
-from wordle.constants import (
+from wordle_assist.constants import (
     ALLOWED_ANSWERS_URL, 
     ALLOWED_ANSWERS_FILENAME,
     ALLOWED_GUESSES_URL, 
