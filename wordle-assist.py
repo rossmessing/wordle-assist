@@ -10,29 +10,26 @@ ALLOWED_GUESSES_URL = "https://gist.github.com/cfreshman/dec102adb5e60a8299857cb
 ALLOWED_ANSWERS_URL = "https://gist.github.com/cfreshman/dec102adb5e60a8299857cbf78f6cf57/raw/15ec4eb961a969d6e263cea4d5b4a180bdeee7bd/answers.txt"
 ALLOWED_GUESSES_FILENAME = "guesses.txt"
 ALLOWED_ANSWERS_FILENAME = "answers.txt"
-# We'll combine them into
-WORD_LIST_FILENAME="words.txt"
-WORD_LENGTH = 5
 
 
-def read_word_list_file(filename, word_length=WORD_LENGTH):
+def read_word_list_file(filename):
     """
     Reads a text word list into a list of words, each of which have length word_length
     """
     with open(filename, 'r') as fh:
-        return [line.strip() for line in fh if len(line.strip()) == word_length]
+        return [line.strip() for line in fh]
 
-def load_word_list(word_length=WORD_LENGTH):
+
+def load_word_lists():
     """
-    Returns a list of words of length word_length from the words in the word lists.  
-    If word lists aren't present, downloads them.
-    Sorts the returned word list, just to ensure we don't use the knowledge of which words can be guessed but cannot be solutions
+    Returns the word lists of allowed guesses and allowed answers
+    If word lists aren't present, download them.
     """
     if not os.path.exists(ALLOWED_GUESSES_FILENAME):
         wget.download(ALLOWED_GUESSES_URL, ALLOWED_GUESSES_FILENAME)
     if not os.path.exists(ALLOWED_ANSWERS_FILENAME):
         wget.download(ALLOWED_ANSWERS_URL, ALLOWED_ANSWERS_FILENAME)
-    return sorted(read_word_list_file(ALLOWED_GUESSES_FILENAME) + read_word_list_file(ALLOWED_ANSWERS_FILENAME))
+    return read_word_list_file(ALLOWED_GUESSES_FILENAME), read_word_list_file(ALLOWED_ANSWERS_FILENAME)
 
 
 def process_guess(word_list, guess, result):
@@ -40,7 +37,7 @@ def process_guess(word_list, guess, result):
     Takes in the current list of possible words, a guess string, and a result string
     Returns the new list of possible words
     """
-    assert len(guess) == WORD_LENGTH, f"Word ({guess}) must have length {WORD_LENGTH}"
+    assert len(guess) == 5, f"Word ({guess}) must have length 5"
     assert len(guess) == len(result), f'Result ({result}) must have the same length as word ({word})'
     for r in result:
         assert r in {'0', '1', '2'}, "Result characters must be 0, 1 or 2"
@@ -96,36 +93,39 @@ def generate_result(guess, solution):
             return_string += '0'
     return return_string
 
-def suggest_guess(word_list, num_suggestions=1):
+
+def suggest_guess(guesses, answers, num_suggestions=1):
     """
-    Suggests guesses from the set of possible words
+    Suggests guesses that minimize the number of possible solutions remaining
     """
     guess_sum = {}
-    for guess in word_list:
+    for guess in guesses + answers:
         guess_sum[guess] = 0
-        for solution in word_list:
-            guess_sum[guess] += len(process_guess(word_list, guess, generate_result(guess, solution)))
-    ordered_guesses = [(k, guess_sum[k]) for k in sorted(guess_sum, key=guess_sum.get)]
+        for solution in answers:
+            guess_sum[guess] += len(process_guess(answers, guess, generate_result(guess, solution)))
+    ordered_guesses = [k for k in sorted(guess_sum, key=guess_sum.get)]
     return ordered_guesses[:num_suggestions]
-
-
 
 
 class WordleShell(cmd.Cmd):
     intro = 'Welcome to a wordle assistant.   Type help or ? to list commands.\n'
     prompt = '(wordle-assist) '
 
-    def __init__(self, word_list):
+    def __init__(self, guesses, answers):
         super(WordleShell, self).__init__()
-        self.word_list = word_list
+        self.guesses = guesses
+        self.answers = answers
 
     def do_show(self, arg):
         'Show all remaining possible words.'
-        print(self.word_list)
+        print(self.answers)
 
     def do_suggest(self, arg):
         'Suggest a number of words to guess. ex: SUGGEST 10'
-        print(suggest_guess(word_list=self.word_list, num_suggestions=int(arg)))
+        num_suggestions = 1
+        if len(arg) > 0:
+            num_suggestions = max(num_suggestions, int(arg))
+        print(suggest_guess(guesses=self.guesses, answers=self.answers, num_suggestions=num_suggestions))
 
     def do_guess(self, arg):
         '''
@@ -138,9 +138,9 @@ class WordleShell(cmd.Cmd):
         arg_split = arg.split()
         word = arg_split[0].strip()
         result = arg_split[1].strip()
-        old_word_list_size = len(self.word_list)
-        self.word_list = process_guess(self.word_list, word, result)
-        print(f'This guess reduced the set of possible solutions from {old_word_list_size} candidates to {len(self.word_list)}')
+        old_num_answers = len(self.answers)
+        self.answers = process_guess(self.answers, word, result)
+        print(f'This guess reduced the set of possible solutions from {old_num_answers} candidates to {len(self.answers)}')
     
     def do_exit(self, arg):
         'Exit the wordle assistant'
@@ -148,4 +148,5 @@ class WordleShell(cmd.Cmd):
 
 
 if __name__ == '__main__':
-    WordleShell(word_list=load_word_list()).cmdloop()
+    allowed_guesses, allowed_answers = load_word_lists()
+    WordleShell(guesses=allowed_guesses, answers=allowed_answers).cmdloop()
