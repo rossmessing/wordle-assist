@@ -28,7 +28,7 @@ conda activate wordle-assist
 ## Usage
 Run the tool with:
 ```
-python wordle-assist.py
+python wordle.py
 ```
 
 This takes you to an interactive experience with a few commands:
