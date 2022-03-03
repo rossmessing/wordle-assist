@@ -6,10 +6,10 @@ class WordleShell(cmd.Cmd):
     intro = 'Welcome to a wordle assistant.   Type help or ? to list commands.\n'
     prompt = '(wordle-assist) '
 
-    def __init__(self, guesses, answers):
+    def __init__(self, answers, guesses):
         super(WordleShell, self).__init__()
-        self.guesses = guesses
         self.answers = answers
+        self.guesses = guesses
 
     def do_show(self, arg):
         'Show all remaining possible words.'

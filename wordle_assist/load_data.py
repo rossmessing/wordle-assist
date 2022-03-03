@@ -17,13 +17,17 @@ def read_word_list_file(filename):
         return [line.strip() for line in fh]
 
 
-def load_word_lists():
+def load_word_lists(
+    allowed_answers_url=ALLOWED_ANSWERS_URL,
+    allowed_answers_filename=ALLOWED_ANSWERS_FILENAME,
+    allowed_guesses_url=ALLOWED_GUESSES_URL,
+    allowed_guesses_filename=ALLOWED_GUESSES_FILENAME):
     """
     Returns the word lists of allowed guesses and allowed answers
     If word lists aren't present, download them.
     """
-    if not exists(ALLOWED_GUESSES_FILENAME):
-        download(ALLOWED_GUESSES_URL, ALLOWED_GUESSES_FILENAME)
     if not exists(ALLOWED_ANSWERS_FILENAME):
         download(ALLOWED_ANSWERS_URL, ALLOWED_ANSWERS_FILENAME)
-    return read_word_list_file(ALLOWED_GUESSES_FILENAME), read_word_list_file(ALLOWED_ANSWERS_FILENAME)
+    if not exists(ALLOWED_GUESSES_FILENAME):
+        download(ALLOWED_GUESSES_URL, ALLOWED_GUESSES_FILENAME)
+    return read_word_list_file(ALLOWED_ANSWERS_FILENAME), read_word_list_file(ALLOWED_GUESSES_FILENAME)

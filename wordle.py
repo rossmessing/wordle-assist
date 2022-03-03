@@ -3,5 +3,5 @@ from wordle_assist.shell import WordleShell
 
 
 if __name__ == '__main__':
-    allowed_guesses, allowed_answers = load_word_lists()
-    WordleShell(guesses=allowed_guesses, answers=allowed_answers).cmdloop()
+    allowed_answers, allowed_guesses = load_word_lists()
+    WordleShell(answers=allowed_answers, guesses=allowed_guesses).cmdloop()
