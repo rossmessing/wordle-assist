@@ -1,9 +1,8 @@
 import cmd
 import os
-import random
-
 
 import wget
+
 
 # this wordlist is the list of all possible gueses that aren't solutions, as derived from the original game's javascript source
 ALLOWED_GUESSES_URL = "https://gist.github.com/cfreshman/dec102adb5e60a8299857cbf78f6cf57/raw/15ec4eb961a969d6e263cea4d5b4a180bdeee7bd/allowed.txt"
@@ -14,9 +13,6 @@ ALLOWED_ANSWERS_FILENAME = "answers.txt"
 # We'll combine them into
 WORD_LIST_FILENAME="words.txt"
 WORD_LENGTH = 5
-RANDOM_SEED = 42
-
-random.seed(RANDOM_SEED)
 
 
 def read_word_list_file(filename, word_length=WORD_LENGTH):
@@ -104,7 +100,6 @@ def suggest_guess(word_list, num_suggestions=1):
     """
     Suggests guesses from the set of possible words
     """
-    # return random.choice(word_list)
     guess_sum = {}
     for guess in word_list:
         guess_sum[guess] = 0
