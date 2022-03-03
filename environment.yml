@@ -10,6 +10,7 @@ dependencies:
   - ncurses=6.3
   - openssl=1.1.1m
   - pip=22.0.3
+  - pytest=7.0.1
   - python=3.9.7
   - python-wget=3.2
   - python_abi=3.9
