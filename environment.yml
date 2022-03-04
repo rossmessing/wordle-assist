@@ -1,4 +1,4 @@
-name: wordle-assist
+name: wordle_assist
 channels:
   - conda-forge
   - defaults
@@ -22,4 +22,3 @@ dependencies:
   - wheel=0.37.1
   - xz=5.2.5
   - zlib=1.2.11
-prefix: /opt/anaconda3/envs/wordle-assist

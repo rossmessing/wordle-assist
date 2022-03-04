@@ -15,20 +15,20 @@ For suggestion, this tool uses a simple $n^3$ algorithm.
 
 # Instructions
 ## Setup
-To create the `wordle-assist` environment:
+To create the `wordle_assist` environment:
 ```
 conda env create -f environment.yml
 ``` 
 which should install all requirements,
 then to activate it:
 ```
-conda activate wordle-assist
+conda activate wordle_assist
 ```
 
 ## Usage
 Run the tool with:
 ```
-python wordle.py
+python wordle_assist.py
 ```
 
 This takes you to an interactive experience with a few commands:
