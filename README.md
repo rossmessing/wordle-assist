@@ -45,4 +45,12 @@ the word `unfit` and receiving as a result:
   * the letter `t` in green (right letter, right place)
 * `suggest n`: This suggests n words to guess.
 
-
+## Development
+To develop this package, you'll want to install this package with 
+```
+pip install -e .
+```
+and validate that that worked correctly by running tests
+```
+python -m pytest
+```
