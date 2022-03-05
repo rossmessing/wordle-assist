@@ -55,3 +55,14 @@ and validate that that worked correctly by running tests
 ```
 python -m pytest
 ```
+
+## Docker Workflow
+To build the container, run 
+```
+docker build -t wordle_assist .
+```
+
+To execute the container, run:
+```
+docker run -it wordle_assist
+```
