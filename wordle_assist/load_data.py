@@ -1,6 +1,6 @@
 from os.path import exists
+from urllib.request import urlretrieve
 
-from wget import download
 
 from wordle_assist.constants import (
     ALLOWED_ANSWERS_URL, 
@@ -27,7 +27,7 @@ def load_word_lists(
     If word lists aren't present, download them.
     """
     if not exists(ALLOWED_ANSWERS_FILENAME):
-        download(ALLOWED_ANSWERS_URL, ALLOWED_ANSWERS_FILENAME)
+        urlretrieve(ALLOWED_ANSWERS_URL, filename=ALLOWED_ANSWERS_FILENAME)
     if not exists(ALLOWED_GUESSES_FILENAME):
-        download(ALLOWED_GUESSES_URL, ALLOWED_GUESSES_FILENAME)
+        urlretrieve(ALLOWED_GUESSES_URL, filename=ALLOWED_GUESSES_FILENAME)
     return read_word_list_file(ALLOWED_ANSWERS_FILENAME), read_word_list_file(ALLOWED_GUESSES_FILENAME)
