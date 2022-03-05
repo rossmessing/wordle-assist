@@ -1,4 +1,5 @@
 import cmd
+from copy import deepcopy
 
 from wordle_assist.wordle import process_guess, suggest_guess
 
@@ -8,6 +9,7 @@ class WordleShell(cmd.Cmd):
 
     def __init__(self, answers, guesses):
         super(WordleShell, self).__init__()
+        self.initial_answers = deepcopy(answers)
         self.answers = answers
         self.guesses = guesses
 
@@ -21,6 +23,10 @@ class WordleShell(cmd.Cmd):
         if len(arg) > 0:
             num_suggestions = max(num_suggestions, int(arg))
         print(suggest_guess(guesses=self.guesses, answers=self.answers, num_suggestions=num_suggestions))
+
+    def do_reset(self, arg):
+        'Resets the current set of possible words to the full set (undoes all guesses).  ex: RESET'
+        self.answers = deepcopy(self.initial_answers)
 
     def do_guess(self, arg):
         '''

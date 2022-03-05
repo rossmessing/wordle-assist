@@ -44,9 +44,10 @@ the word `unfit` and receiving as a result:
   * the letter `i` in grey
   * the letter `t` in green (right letter, right place)
 * `suggest n`: This suggests n words to guess.
+* `reset`: Resets the set of possible words to the full initial set (undoes guesses)
 
 ## Development
-To develop this package, you'll want to install this package with 
+To develop this package, you'll generally want to install this package with 
 ```
 pip install -e .
 ```
