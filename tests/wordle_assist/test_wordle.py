@@ -17,3 +17,13 @@ def test_generate_result_solution():
 
 def test_generate_result_non_overlapping():
     assert "00000" == generate_result(WORD, NON_OVERLAPPING_WORD)
+
+def test_generate_result_partial_overlap():
+    test_word = WORD[:3] + NON_OVERLAPPING_WORD[3:]
+    assert "22200" == generate_result(test_word, WORD)
+
+def test_handles_double_letters():
+    three = "lolly"
+    two = "pully"
+    assert "00222" == generate_result(two, three)
+    assert "00222" == generate_result(three, two)

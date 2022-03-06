@@ -48,16 +48,17 @@ def process_guess(word_list, guess, result):
 
 def generate_result(guess, solution):
     """ returns result string for guess if solution is the word being guessed"""
-    solution_chars = frozenset(solution)
-    return_string = ""
-    for g, s in zip(guess, solution):
+    unmatched_chars = set()
+    return_string_array = [0, 0, 0, 0, 0]
+    for i, (g, s) in enumerate(zip(guess, solution)):
         if g == s:
-            return_string += '2'
-        elif g in solution_chars:
-            return_string += '1'
+            return_string_array[i] = 2
         else:
-            return_string += '0'
-    return return_string
+            unmatched_chars.add(s)
+    for i, (g, s) in enumerate(zip(guess, solution)):
+        if g != s and g in unmatched_chars:
+            return_string_array[i] = 1
+    return ''.join([str(i) for i in return_string_array])
 
 
 def suggest_guess(guesses, answers, num_suggestions=1):
