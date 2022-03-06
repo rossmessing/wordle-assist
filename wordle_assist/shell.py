@@ -3,15 +3,19 @@ from copy import deepcopy
 
 from wordle_assist.wordle import process_guess, suggest_guess
 
+INTRO ='Welcome to a wordle assistant.   Type help or ? to list commands.'
+PROMPT = '(wordle-assist) '
+
 class WordleShell(cmd.Cmd):
-    intro = 'Welcome to a wordle assistant.   Type help or ? to list commands.\n'
-    prompt = '(wordle-assist) '
+    intro = INTRO
+    prompt = PROMPT
 
     def __init__(self, answers, guesses):
         super(WordleShell, self).__init__()
         self.initial_answers = deepcopy(answers)
         self.answers = answers
         self.guesses = guesses
+        
 
     def do_show(self, arg):
         'Show all remaining possible words.'
