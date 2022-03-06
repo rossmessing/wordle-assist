@@ -27,6 +27,7 @@ class WordleShell(cmd.Cmd):
     def do_reset(self, arg):
         'Resets the current set of possible words to the full set (undoes all guesses).  ex: RESET'
         self.answers = deepcopy(self.initial_answers)
+        print(f'Reset the set of possible solutions to {len(self.answers)} candidates')
 
     def do_guess(self, arg):
         '''
