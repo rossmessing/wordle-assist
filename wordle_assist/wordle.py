@@ -10,13 +10,17 @@ def process_guess(word_list, guess, result):
     to_remove = set()
     wrong_pos = set()
     right_pos = set()
-    for position, (letter, result) in enumerate(zip(guess, result)):
-        if result == '0':  # letter not in word at all
-            to_remove.add(letter)
-        elif result == '1':  # wrong position
-            wrong_pos.add((letter, position))
-        else:  # right position
+    to_keep = set()
+    for position, (letter, r) in enumerate(zip(guess, result)):
+        if r == '2':
             right_pos.add((letter, position))
+            to_keep.add(letter)
+        elif r == '1':
+            wrong_pos.add((letter, position))
+            to_keep.add(letter)
+    for letter, r in zip(guess, result):
+        if r == '0' and letter not in to_keep:
+            to_remove.add(letter)
     
     new_word_list = []
     for word in word_list:

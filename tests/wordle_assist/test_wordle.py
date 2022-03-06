@@ -27,3 +27,6 @@ def test_handles_double_letters():
     two = "pully"
     assert "00222" == generate_result(two, three)
     assert "00222" == generate_result(three, two)
+
+def test_loony_cloud():
+    assert generate_result("loony", "cloud") == "10200"
