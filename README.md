@@ -14,7 +14,7 @@ For suggestion, this tool uses a simple $n^3$ algorithm.
 
 
 # Instructions
-## Setup
+## Conda Setup
 To create the `wordle_assist` environment:
 ```
 conda env create -f environment.yml
