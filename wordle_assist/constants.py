@@ -4,3 +4,5 @@ ALLOWED_GUESSES_URL = "https://gist.github.com/cfreshman/dec102adb5e60a8299857cb
 ALLOWED_ANSWERS_URL = "https://gist.github.com/cfreshman/dec102adb5e60a8299857cbf78f6cf57/raw/15ec4eb961a969d6e263cea4d5b4a180bdeee7bd/answers.txt"
 ALLOWED_GUESSES_FILENAME = "guesses.txt"
 ALLOWED_ANSWERS_FILENAME = "answers.txt"
+
+AUTOMATICALLY_SHOW_MAX_SET_SIZE = 10

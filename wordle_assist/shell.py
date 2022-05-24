@@ -1,6 +1,7 @@
 import cmd
 from copy import deepcopy
 
+from wordle_assist.constants import AUTOMATICALLY_SHOW_MAX_SET_SIZE
 from wordle_assist.wordle import process_guess, suggest_guess
 
 INTRO ='Welcome to a wordle assistant.   Type help or ? to list commands.'
@@ -47,6 +48,8 @@ class WordleShell(cmd.Cmd):
         old_num_answers = len(self.answers)
         self.answers = process_guess(self.answers, word, result)
         print(f'This guess reduced the set of possible solutions from {old_num_answers} candidates to {len(self.answers)}')
+        if len(self.answers) <= AUTOMATICALLY_SHOW_MAX_SET_SIZE:
+            print(f'Candidates: {", ".join(self.answers)}')
     
     def do_exit(self, arg):
         'Exit the wordle assistant'
